@@ -18,7 +18,7 @@ public class Connect {
     public Connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            c = DriverManager.getConnection("jdbc:mysql://localhost:3303/atm", "root", "Krisna2005");
+            c = DriverManager.getConnection("jdbc:mysql://localhost:3303/atm", <username>, <password>);
             s = c.createStatement();
             System.out.println("Connection established successfully.");
         } catch (Exception e) {
