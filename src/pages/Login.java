@@ -5,10 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 public class Login extends JFrame implements ActionListener {
 
-    JLabel title, cardno, pin;
     JButton login, clear, signup;
     JTextField cardTextField;
     JPasswordField pinTextField;
@@ -43,9 +43,9 @@ public class Login extends JFrame implements ActionListener {
         label.setBounds(150,10,100,100); // bound inside the frame
         add(label);
 
-        title = createLabels("Welcome USER!",38,270,50,400,40);
-        cardno = createLabels("Card No: ",28,120,150,200,40);
-        pin = createLabels("PIN: ",28,120,200,400,40);
+        JLabel title = createLabels("Welcome USER!",38,270,50,400,40);
+        JLabel cardno = createLabels("Card No: ",28,120,150,200,40);
+        JLabel pin = createLabels("PIN: ",28,120,200,400,40);
 
         cardTextField = new JTextField();
         cardTextField.setBounds(300, 155, 350, 30);
@@ -74,7 +74,21 @@ public class Login extends JFrame implements ActionListener {
             cardTextField.setText("");
             pinTextField.setText("");
         } else if(ae.getSource() == login) {
-
+            Connect c = new Connect();
+            String cardNo = cardTextField.getText();
+            String pinNo = pinTextField.getText();
+            String query = "SELECT * FROM LOGIN WHERE cardNo='"+cardNo+"' AND pin='"+pinNo+"'";
+            try {
+                ResultSet rs = c.s.executeQuery(query);
+                if(rs.next()){
+                    setVisible(false);
+                    new Transaction(pinNo).setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null,"Incorrect cardNumber or PIN!");
+                }
+            } catch (Exception e) {
+                System.out.println("Error in executing query: " + e.getMessage());
+            }
         } else if(ae.getSource() == signup) {
             setVisible(false);
             new SignUpOne().setVisible(true);

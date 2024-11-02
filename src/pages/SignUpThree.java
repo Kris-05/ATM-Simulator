@@ -115,17 +115,22 @@ public class SignUpThree extends JFrame implements ActionListener {
             try {
                 // JOptionPane.showMessageDialog(null,"CARD NUMBER: " +cardNo+ "\n PIN NUMBER: "+pinNo);
                 Connect c = new Connect();
-                String query = "INSERT INTO ACCOUNT_INFO VALUES('"+formno+"','"+accountType+"','"+facility+"','"+cardNo+"','"+pinNo+"')";
-                c.s.executeUpdate(query);
+                String query1 = "INSERT INTO ACCOUNT_INFO VALUES('"+formno+"','"+accountType+"','"+facility+"','"+cardNo+"','"+pinNo+"')";
+                String query2 = "INSERT INTO LOGIN VALUES('"+formno+"','"+pinNo+"','"+cardNo+"')";
+                c.s.executeUpdate(query1);
+                c.s.executeUpdate(query2);
                 System.out.println("Insertion for account_info successful.");
 
                 JOptionPane.showMessageDialog(null,"CARD NUMBER: " +cardNo+ "\n PIN NUMBER: "+pinNo);
+                setVisible(false);
+                new Transaction(pinNo).setVisible(true);
             } catch (Exception e) {
                 System.out.println("Error in executing query: " + e.getMessage());
             }
 
         } else if (ae.getSource() == cancel) {
-            System.exit(0);
+            setVisible(false);
+            new Login().setVisible(true);
         }
     }
 
