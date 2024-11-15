@@ -87,7 +87,7 @@ public class Login extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null,"Incorrect cardNumber or PIN!");
                 }
             } catch (Exception e) {
-                System.out.println("Error in executing query: " + e.getMessage());
+                System.out.println("Error in executing query in LOGIN class: " + e.getMessage());
             }
         } else if(ae.getSource() == signup) {
             setVisible(false);

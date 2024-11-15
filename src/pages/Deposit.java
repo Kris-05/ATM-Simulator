@@ -88,7 +88,7 @@ public class Deposit extends JFrame implements ActionListener {
                     setVisible(false);
                     new Transaction(pinNo).setVisible(true);
                 } catch (SQLException e) {
-                    System.out.println("Error in executing query: " + e.getMessage());
+                    System.out.println("Error in executing query in DEPOSIT class: " + e.getMessage());
                 }
             }
         } else if(ae.getSource() == back) {
