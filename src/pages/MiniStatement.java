@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MiniStatement extends JFrame implements ActionListener {
+public class MiniStatement extends JFrame {
     String pinNo;
     JLayeredPane layer;
 
@@ -45,7 +45,7 @@ public class MiniStatement extends JFrame implements ActionListener {
               card.setText("No card found for the provided PIN.");
           }
         } catch (SQLException e) {
-            System.out.println("Error in executing query in  WITHDRAW class: " + e.getMessage());
+            System.out.println("Error in executing query in MINI-STATEMENT class: " + e.getMessage());
         }
 
         try{
@@ -71,7 +71,7 @@ public class MiniStatement extends JFrame implements ActionListener {
                 balance.setText("Your Current Account Balance is Rs. "+ remain);
             }
         } catch (SQLException e) {
-            System.out.println("Error in executing query in  WITHDRAW class: " + e.getMessage());
+            System.out.println("Error in executing query in MINI-STATEMENT class: " + e.getMessage());
         }
 
         add(layer);
@@ -84,10 +84,5 @@ public class MiniStatement extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         new MiniStatement("");
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }

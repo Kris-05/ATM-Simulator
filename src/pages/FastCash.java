@@ -101,7 +101,7 @@ public class FastCash extends JFrame implements ActionListener {
                 setVisible(false);
                 new Transaction(pinNo).setVisible(true);
             } catch (Exception e) {
-                System.out.println("Error in executing query in FASTCASH class: " + e.getMessage());
+                System.out.println("Error in executing query in FAST-CASH class: " + e.getMessage());
             }
         }
     }

@@ -109,7 +109,7 @@ public class PinChange extends JFrame implements ActionListener {
                 setVisible(false);
                 new Transaction(rpin).setVisible(true);
             } catch (Exception e) {
-                System.out.println("Error in executing query: " + e.getMessage());
+                System.out.println("Error in executing query in PIN-CHANGE class: " + e.getMessage());
             }
         }
     }

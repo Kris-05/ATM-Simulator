@@ -124,7 +124,7 @@ public class SignUpTwo extends JFrame implements ActionListener {
             setVisible(false);
             new SignUpThree(formno).setVisible(true);
         } catch (Exception e) {
-            System.out.println("Error in executing query: " + e.getMessage());
+            System.out.println("Error in executing query in SIGNUP-TWO class: " + e.getMessage());
         }
     }
 

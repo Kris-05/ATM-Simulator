@@ -125,7 +125,7 @@ public class SignUpThree extends JFrame implements ActionListener {
                 setVisible(false);
                 new Transaction(pinNo).setVisible(true);
             } catch (Exception e) {
-                System.out.println("Error in executing query: " + e.getMessage());
+                System.out.println("Error in executing query in SIGNUP-THREE class: " + e.getMessage());
             }
 
         } else if (ae.getSource() == cancel) {
