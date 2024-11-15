@@ -75,9 +75,11 @@ public class Deposit extends JFrame implements ActionListener {
         if(ae.getSource() == deposit) {
             String val = amount.getText();
             Date date = new Date();
-            if(val.equals(""))
+            if(val.isEmpty())
                 JOptionPane.showMessageDialog(null,"Please enter the amount!");
-            else {
+            else if(val.contains("-")) {
+                JOptionPane.showMessageDialog(null,"Invalid ammount");
+            } else {
                 Connect c = new Connect();
                 String query = "INSERT INTO BANK VALUES('"+pinNo+"','"+date+"','deposit','"+val+"')";
                 try {

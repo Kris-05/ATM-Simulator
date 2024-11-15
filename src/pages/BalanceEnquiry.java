@@ -4,12 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
-public class Transaction extends JFrame implements ActionListener {
+public class BalanceEnquiry extends JFrame implements ActionListener {
 
     JLayeredPane layer;
     String pinNo;
-    JButton deposit, withdraw, miniStatement, pinChange, fastCash, balance, exit;
+    JButton back;
 
     public JLabel createLabels(String content, int size, int x, int y, int width, int height) {
         JLabel temp = new JLabel(content);
@@ -30,10 +31,11 @@ public class Transaction extends JFrame implements ActionListener {
         return temp;
     }
 
-    public Transaction(String pinNo){
+    public BalanceEnquiry(String pinNo){
         this.pinNo = pinNo;
-        setTitle("TRANSACTION PAGE");
+        setTitle("BALANCE ENQUIRY");
         setLayout(null);
+
         layer = new JLayeredPane();
         layer.setBounds(0,0,800,830);
 
@@ -44,15 +46,24 @@ public class Transaction extends JFrame implements ActionListener {
         image.setBounds(0,0,800,830);
         layer.add(image, JLayeredPane.DEFAULT_LAYER);
 
-        JLabel text = createLabels("PLEASE SELECT YOUR TRANSACTION",16,155,270,500,30);
+        Connect c = new Connect();
+        int balance = 0;
+        try{
+            String query = "SELECT * FROM BANK WHERE PIN='"+pinNo+"'";
+            ResultSet rs = c.s.executeQuery(query);
+            while(rs.next()){
+                if(rs.getString("type").equalsIgnoreCase("deposit")){
+                    balance += Integer.parseInt(rs.getString("amount"));
+                } else {
+                    balance -= Integer.parseInt(rs.getString("amount"));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error in executing query in BALANCE-ENQUIRY class: " + e.getMessage());
+        }
 
-        deposit = createButton("Deposit",150,383);
-        withdraw = createButton("Withdraw",320,383);
-        fastCash = createButton("Fast Cash",150,415);
-        miniStatement = createButton("Mini Statement",320,415);
-        pinChange = createButton("Pin Change",150,447);
-        balance = createButton("Balance Inquiry",320,447);
-        exit = createButton("Exit",320,479);
+        back = createButton("Back",150,479);
+        JLabel text = createLabels("<html>YOUR CURRENT ACCOUNT BALANCE IS <br>Rs.<html>"+balance,14,160,290,500,30);
 
         add(layer);
         getContentPane().setBackground(Color.WHITE);
@@ -62,29 +73,15 @@ public class Transaction extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        if(ae.getSource() == exit) {
-            System.exit(0);
-        } else if(ae.getSource() == deposit) {
-            setVisible(false);
-            new Deposit(pinNo).setVisible(true);
-        } else if(ae.getSource() == withdraw) {
-            setVisible(false);
-            new Withdraw(pinNo).setVisible(true);
-        } else if(ae.getSource() == fastCash) {
-            setVisible(false);
-            new FastCash(pinNo).setVisible(true);
-        } else if(ae.getSource() == pinChange){
-            setVisible(false);
-            new PinChange(pinNo).setVisible(true);
-        } else if(ae.getSource() == balance) {
-            setVisible(false);
-            new BalanceEnquiry(pinNo).setVisible(true);
-        }
+    public static void main(String[] args) {
+        new BalanceEnquiry("");
     }
 
-    public static void main(String[] args) {
-        new Transaction("");
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if(ae.getSource() == back){
+            setVisible(false);
+            new Transaction(pinNo).setVisible(true);
+        }
     }
 }
