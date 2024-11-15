@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -74,19 +75,36 @@ public class Withdraw extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == withdraw) {
             String val = amount.getText();
-            Date date = new Date();
-            if(val.equals(""))
+            if(val.isEmpty())
                 JOptionPane.showMessageDialog(null,"Please enter the amount!");
             else {
                 Connect c = new Connect();
-                String query = "INSERT INTO BANK VALUES('"+pinNo+"','"+date+"','withdraw','"+val+"')";
                 try {
-                    c.s.executeUpdate(query);
+                    String query1 = "SELECT * FROM BANK WHERE PIN='"+pinNo+"'";
+                    ResultSet rs = c.s.executeQuery(query1);
+                    int balance = 0;
+                    while(rs.next()){
+                        if(rs.getString("type").equalsIgnoreCase("Deposit")){
+                            balance += Integer.parseInt(rs.getString("amount"));
+                        } else {
+                            balance -= Integer.parseInt(rs.getString("amount"));
+                        }
+                    }
+
+                    if(ae.getSource() != back && balance < Integer.parseInt(val)){
+                        JOptionPane.showMessageDialog(null,"Insufficient balance");
+                        return;
+                    }
+
+                    Date date = new Date();
+                    String query2 = "INSERT INTO BANK VALUES('"+pinNo+"','"+date+"','withdraw','"+val+"')";
+                    c.s.executeUpdate(query2);
                     JOptionPane.showMessageDialog(null,"Rs: "+val+" Withdrew Successfully");
+
                     setVisible(false);
                     new Transaction(pinNo).setVisible(true);
                 } catch (SQLException e) {
-                    System.out.println("Error in executing query: " + e.getMessage());
+                    System.out.println("Error in executing query in  WITHDRAW class: " + e.getMessage());
                 }
             }
         } else if(ae.getSource() == back) {

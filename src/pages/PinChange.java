@@ -90,8 +90,9 @@ public class PinChange extends JFrame implements ActionListener {
                     return;
                 }
 
-                if(!epin.isEmpty() || !rpin.isEmpty()){
+                if(epin.isEmpty()){
                     JOptionPane.showMessageDialog(null, "Please Enter PIN!");
+                    return;
                 }
 
                 Connect c = new Connect();
