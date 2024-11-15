@@ -35,7 +35,7 @@ public class MiniStatement extends JFrame {
 
         try{
           Connect c = new Connect();
-          String query = "SELECT * FROM LOGIN WHERE PIN='"+2008+"'";
+          String query = "SELECT * FROM LOGIN WHERE PIN='"+pinNo+"'";
           ResultSet rs = c.s.executeQuery(query);
           if(rs.next()){
               String val = rs.getString("cardNo");
@@ -50,7 +50,7 @@ public class MiniStatement extends JFrame {
 
         try{
             Connect c = new Connect();
-            String query = "SELECT * FROM BANK WHERE PIN='"+2008+"'";
+            String query = "SELECT * FROM BANK WHERE PIN='"+pinNo+"'";
             ResultSet rs = c.s.executeQuery(query);
             int remain = 0;
             while(rs.next()){
